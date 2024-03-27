@@ -29,6 +29,6 @@ export default async function handler(req, res) {
             console.error(err.message);
             return res.status(500).json({ error: '服务端出错，请稍后再试' });
         }
-        res.json({ url: `${req.headers.origin}/app/lottery/draws/${session_id}` });
+        res.json({ url: `${req.headers.origin}${process.env.BASE_PATH}/draws/${session_id}` });
     });
 }

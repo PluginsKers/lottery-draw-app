@@ -1,9 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    basePath: '/app/lottery',
-    env: {
-      CORP_ID: process.env.CORP_ID
-    },
+  basePath: process.env.BASE_PATH,
+  env: {
+    CORP_ID: process.env.CORP_ID,
+    BASE_PATH: process.env.BASE_PATH,
+  },
 };
 
 export default nextConfig;

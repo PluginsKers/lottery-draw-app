@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-import TipBar from '@/pages/TipBar'
+import TipBar from '@/pages/components/TipBar'
 
 export default function Settings() {
     const [rangeStart, setRangeStart] = useState('');
@@ -18,7 +18,7 @@ export default function Settings() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/app/lottery/api/settings', { range_start: Number(rangeStart), range_end: Number(rangeEnd) });
+            const response = await axios.post(`${process.env.BASE_PATH}/api/settings`, { range_start: Number(rangeStart), range_end: Number(rangeEnd) });
             setGeneratedLink(response.data.url);
             showTip('抽签链接已生成');
         } catch (error) {

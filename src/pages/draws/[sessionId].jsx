@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import TipBar from '@/pages/TipBar'
+import TipBar from '@/pages/components/TipBar'
 
 
 export default function DrawPage() {
@@ -48,17 +48,17 @@ export default function DrawPage() {
             if (!sessionId) return;
 
             try {
-                const userInfoResponse = await axios.get(`/app/lottery/api/userinfo?code=${code}`);
+                const userInfoResponse = await axios.get(`${process.env.BASE_PATH}/api/userinfo?code=${code}`);
                 const { userid, name } = userInfoResponse.data;
                 setUserInfo({ userid, name });
 
                 // 检查session是否存在
-                const sessionResponse = await axios.get(`/app/lottery/api/checkSession?sessionId=${sessionId}`);
+                const sessionResponse = await axios.get(`${process.env.BASE_PATH}/api/checkSession?sessionId=${sessionId}`);
                 setSessionExists(sessionResponse.data.exists);
 
                 if (sessionResponse.data.exists) {
                     // 查询用户是否已经抽签
-                    const drawResponse = await axios.get(`/app/lottery/api/checkDraw?sessionId=${sessionId}&userId=${userid}`);
+                    const drawResponse = await axios.get(`${process.env.BASE_PATH}/api/checkDraw?sessionId=${sessionId}&userId=${userid}`);
                     const { hasDrawn, drawResult } = drawResponse.data;
                     setHasDrawn(hasDrawn);
                     if (hasDrawn) {
@@ -81,7 +81,7 @@ export default function DrawPage() {
             return;
         }
 
-        axios.get(`/app/lottery/api/draw`, {
+        axios.get(`${process.env.BASE_PATH}/api/draw`, {
             params: {
                 userId: userInfo.userid,
                 sessionId: sessionId,
